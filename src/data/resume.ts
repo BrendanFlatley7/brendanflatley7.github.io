@@ -274,10 +274,25 @@ export const resume: Resume = {
    * Personal projects / work samples — your own work, not tied to an employer.
    * The section is hidden entirely while this array is empty.
    *
-   * TODO(Brendan): add entries, e.g.
-   *   { name: "…", blurb: "…", repo: "https://github.com/…", tech: ["dbt", "DuckDB"] }
+   * `tech` renders as tags beneath the blurb; leave it empty to omit them.
+   * Add `repo` alongside `url` if you ever make the source public.
    */
-  projects: [] as Project[],
+  projects: [
+    {
+      name: "My Little Gambler",
+      blurb:
+        "Sourced and created historical data source for NFL odds and results for prediction model, including daily cron jobs to track odds changes and hedging opportunities on current bets.",
+      url: "https://my-little-gambler.vercel.app",
+      tech: [],
+    },
+    {
+      name: "Hi / Lo",
+      blurb:
+        "Tracks the High / Low side game for a golf round between 4 players.",
+      url: "https://hi-lo-psi.vercel.app/game/new",
+      tech: [],
+    },
+  ] as Project[],
 
   education: [
     {
