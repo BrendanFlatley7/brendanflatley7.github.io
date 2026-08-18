@@ -3,7 +3,8 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-  // User-site repo (brendanflatley.github.io) serves from the domain root,
-  // so no `base` path is needed.
-  site: 'https://brendanflatley.github.io',
+  // The account is BrendanFlatley7, so the user site lives at
+  // brendanflatley7.github.io. A repo of exactly that name serves from the
+  // domain root and needs no `base`.
+  site: 'https://brendanflatley7.github.io',
 });

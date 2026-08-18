@@ -102,5 +102,7 @@ npm run build && grep -c "your-number" dist/index.html
 Push to `main`. [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) builds and publishes
 to GitHub Pages. In the repository settings, set **Pages → Source** to **GitHub Actions** once.
 
-The repo is expected to be named `brendanflatley.github.io` so the site serves from the domain root.
-If you rename it, set `base` in [`astro.config.mjs`](astro.config.mjs) to match the subpath.
+The repo must be named `brendanflatley7.github.io` — matching the GitHub account exactly — for the
+site to serve from the domain root at <https://brendanflatley7.github.io/>. Any other name makes it a
+project site served from `/<repo-name>/`, which additionally requires setting `base` in
+[`astro.config.mjs`](astro.config.mjs) to that subpath.
