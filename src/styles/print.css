@@ -1,0 +1,277 @@
+/* ---------------------------------------------------------------------------
+   Print / PDF
+   Governs both Cmd+P and `npm run pdf` — the PDF script renders with print
+   media emulation, so browser print preview and the PDF agree.
+--------------------------------------------------------------------------- */
+
+@media print {
+  @page {
+    size: Letter;
+    margin: 0.55in 0.55in;
+  }
+
+  /* Force the light palette regardless of the OS appearance the renderer
+     inherits. The yellow is stepped darker still, so it holds up both as
+     heading type and as a mark when the page is printed in greyscale. */
+  :root {
+    --bg: #ffffff;
+    --surface: #ffffff;
+    --text: #000000;
+    --text-muted: #1f1f1f;
+    --text-subtle: #4a4a4a;
+    --rule: #c9c9c6;
+    --rule-strong: #a8a8a4;
+    --accent: #8a6508;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #000000;
+    font-size: 10pt;
+    line-height: 1.4;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .resume {
+    max-width: none;
+    padding: 0;
+  }
+
+  /* --- Masthead -------------------------------------------------------- */
+
+  .masthead {
+    padding-bottom: 0.42rem;
+    border-bottom: 0.5pt solid var(--rule);
+  }
+
+  .masthead__name {
+    font-size: 22pt;
+    letter-spacing: -0.028em;
+  }
+
+  .masthead__identity {
+    margin-top: 0.16rem;
+    font-size: 11.2pt;
+    color: #333333;
+    gap: 0 0.5rem;
+  }
+
+  .masthead__sep {
+    width: 3px;
+    height: 3px;
+    background: var(--accent);
+  }
+
+  /* Chips are screen furniture — in print the contact row is plain text. */
+  .contact {
+    margin-top: 0.3rem;
+    gap: 0 0.55rem;
+  }
+
+  .contact__item {
+    padding: 0;
+    border: none;
+    border-radius: 0;
+    background: none;
+    font-size: 8.6pt;
+    color: #333333;
+  }
+
+  .contact li:not(:last-child)::after {
+    content: "·";
+    margin-left: 0.55rem;
+    color: var(--text-subtle);
+  }
+
+  /* --- Lede ------------------------------------------------------------ */
+
+  .lede {
+    margin-top: 0.55rem;
+    font-size: 10.1pt;
+    line-height: 1.42;
+    color: #1a1a1a;
+  }
+
+  /* --- Sections -------------------------------------------------------- */
+
+  .section {
+    margin-top: 1.25rem;
+  }
+
+  .section__title {
+    padding-top: 0.36rem;
+    margin-bottom: 0.6rem;
+    font-size: 8pt;
+    letter-spacing: 0.16em;
+    color: var(--accent);
+  }
+
+  .section__title::before {
+    width: 1.4rem;
+    height: 1.6pt;
+    background: var(--accent);
+  }
+
+  /* --- Skills ---------------------------------------------------------- */
+
+  .skills__grid {
+    /* Narrower tracks than the screen, so seven skill groups fill two rows of
+       four instead of spilling a near-empty third row. auto-fit collapses the
+       unused tracks, so the two-group Professional block widens to fill the
+       row rather than leaving dead space to its right. */
+    /* NB: rem here resolves against the 10pt print root, not the screen's
+       16px — so this is ~1.5in, wide enough to hold the longest label on one
+       or two lines and land seven groups in two rows of four. auto-fit
+       collapses unused tracks, so the two-group Professional block widens to
+       fill its row rather than leaving dead space beside it. */
+    grid-template-columns: repeat(auto-fit, minmax(11.5rem, 1fr));
+    gap: 0.38rem 0.9rem;
+  }
+
+  .skill-col__label {
+    font-size: 6.9pt;
+    letter-spacing: 0.04em;
+    padding-bottom: 0.1rem;
+    margin-bottom: 0.12rem;
+    border-bottom: 0.5pt solid var(--rule);
+  }
+
+  .skill-col__items li {
+    font-size: 8.5pt;
+    line-height: 1.34;
+    color: #1f1f1f;
+  }
+
+  /* --- Experience ------------------------------------------------------ */
+
+  .job + .job {
+    margin-top: 0.9rem;
+  }
+
+  .job__company {
+    font-size: 11.5pt;
+  }
+
+  .role {
+    margin-top: 0.28rem;
+    padding-left: 0.5rem;
+    border-left: 1pt solid var(--rule);
+  }
+
+  .role + .role {
+    margin-top: 0.45rem;
+  }
+
+  .role__dates {
+    font-size: 8.6pt;
+  }
+
+  .role__note {
+    font-size: 8.6pt;
+  }
+
+  .group {
+    margin-top: 0.26rem;
+  }
+
+  .group--titled {
+    margin-top: 0.62rem;
+  }
+
+  .group__label {
+    font-size: 7.4pt;
+    letter-spacing: 0.13em;
+    gap: 0.55em;
+    margin-bottom: 0.28rem;
+    color: #000000;
+  }
+
+  .group__label::before {
+    width: 0.95rem;
+    height: 1.4pt;
+  }
+
+  .bullets {
+    gap: 0.2rem;
+  }
+
+  .bullets li {
+    font-size: 9.3pt;
+    color: #1a1a1a;
+  }
+
+  .bullets li::before {
+    /* Same yellow as everything else — the print value is dark enough to stay
+       visible when the page is printed in greyscale. */
+    background: var(--accent);
+    opacity: 1;
+    width: 2.5px;
+    height: 2.5px;
+    top: 0.55em;
+  }
+
+  /* --- Pagination ------------------------------------------------------ */
+
+  /* Keep small units intact. A whole role is deliberately NOT in this list:
+     the MetLife role is taller than half a page, so protecting it would push
+     it to a fresh page and leave a large gap behind it. */
+  .project,
+  .school,
+  .skill-col,
+  .bullets li {
+    break-inside: avoid;
+  }
+
+  .section__title,
+  .group__label,
+  .job__company,
+  .job__head,
+  .role__head,
+  .role__note {
+    break-after: avoid;
+  }
+
+  p,
+  li {
+    orphans: 3;
+    widows: 3;
+  }
+
+  /* --- Links ----------------------------------------------------------- */
+
+  a {
+    color: #000000;
+    text-decoration: none;
+  }
+
+  /* Reveal the destination of links whose visible text hides it. Links that
+     already show their own URL opt out with .no-print-url. */
+  a[href^="http"]:not(.no-print-url)::after {
+    content: " (" attr(href) ")";
+    font-size: 0.85em;
+    color: #4a4a4a;
+    word-break: break-all;
+  }
+
+  /* Tag pills read as clutter in print — flatten to plain text. */
+  .tags {
+    gap: 0.1rem 0.5rem;
+    margin-top: 0.15rem;
+  }
+
+  .tags li {
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 8.5pt;
+    color: #4a4a4a;
+  }
+
+  .tags li:not(:last-child)::after {
+    content: " ·";
+  }
+}

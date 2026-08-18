@@ -1,0 +1,21 @@
+---
+import Section from "./Section.astro";
+import { resume } from "../data/resolve";
+---
+
+<Section title="Education">
+  {
+    resume.education.map((school) => (
+      <div class="school">
+        <h3 class="school__name">
+          {school.school}
+          {school.location && (
+            <span class="job__location">{school.location}</span>
+          )}
+        </h3>
+        <p class="school__detail">{school.degree}</p>
+        {school.minor && <p class="school__minor">Minor: {school.minor}</p>}
+      </div>
+    ))
+  }
+</Section>

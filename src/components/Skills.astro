@@ -1,0 +1,33 @@
+---
+import Section from "./Section.astro";
+import { resume } from "../data/resolve";
+import type { SkillGroup } from "../data/resume";
+
+const { technical, additional } = resume.skills;
+
+const sections: [title: string, groups: SkillGroup[]][] = [
+  ["Technical Skills", technical],
+  ["Professional Skills", additional],
+];
+---
+
+{
+  sections.map(([title, groups]) =>
+    groups.length > 0 ? (
+      <Section title={title}>
+        <div class="skills__grid">
+          {groups.map((group) => (
+            <div class="skill-col">
+              <h3 class="skill-col__label">{group.group}</h3>
+              <ul class="skill-col__items">
+                {group.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      </Section>
+    ) : null
+  )
+}

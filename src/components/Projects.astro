@@ -1,0 +1,33 @@
+---
+import Section from "./Section.astro";
+import { resume } from "../data/resolve";
+
+// Personal work samples only. The whole section is omitted while empty.
+const { projects } = resume;
+---
+
+{
+  projects.length > 0 && (
+    <Section title="Projects">
+      {projects.map((project) => (
+        <article class="project">
+          <div class="project__head">
+            <h3 class="project__name">{project.name}</h3>
+            <p class="project__links">
+              {project.url && <a href={project.url}>Live</a>}
+              {project.repo && <a href={project.repo}>Source</a>}
+            </p>
+          </div>
+          <p class="project__blurb">{project.blurb}</p>
+          {project.tech.length > 0 && (
+            <ul class="tags">
+              {project.tech.map((tech) => (
+                <li>{tech}</li>
+              ))}
+            </ul>
+          )}
+        </article>
+      ))}
+    </Section>
+  )
+}

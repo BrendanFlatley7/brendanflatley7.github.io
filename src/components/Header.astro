@@ -1,0 +1,60 @@
+---
+import { resume } from "../data/resolve";
+import { displayUrl } from "../utils/format";
+
+const { name, headline, location, email, phone, links } = resume;
+
+// Only non-empty profile links render.
+const profiles = (
+  [
+    ["GitHub", links.github],
+    ["LinkedIn", links.linkedin],
+    ["Website", links.website],
+  ] satisfies [label: string, url: string][]
+).filter(([, url]) => url.length > 0);
+
+// Identity (who and where) reads as one block; ways to reach him read as another.
+const identity = [headline, location].filter(Boolean);
+---
+
+<header class="masthead">
+  <h1 class="masthead__name">{name}</h1>
+
+  {
+    identity.length > 0 && (
+      <p class="masthead__identity">
+        {identity.map((part, i) => (
+          <>
+            {i > 0 && <span class="masthead__sep" aria-hidden="true" />}
+            <span>{part}</span>
+          </>
+        ))}
+      </p>
+    )
+  }
+
+  <ul class="contact">
+    <li>
+      <a class="contact__item" href={`mailto:${email}`}>{email}</a>
+    </li>
+    {/* Present only when built locally — see .env.local */}
+    {
+      phone && (
+        <li>
+          <a class="contact__item" href={`tel:${phone.replace(/[^\d+]/g, "")}`}>
+            {phone}
+          </a>
+        </li>
+      )
+    }
+    {
+      profiles.map(([label, url]) => (
+        <li>
+          <a class="contact__item no-print-url" href={url} aria-label={label}>
+            {displayUrl(url)}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</header>

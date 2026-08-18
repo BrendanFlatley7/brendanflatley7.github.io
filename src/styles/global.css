@@ -1,0 +1,482 @@
+/* ---------------------------------------------------------------------------
+   Design tokens
+   Light palette on :root, dark swapped under prefers-color-scheme.
+   Print overrides everything — see print.css.
+--------------------------------------------------------------------------- */
+
+:root {
+  --bg: #fcfcfb;
+  --surface: #f4f4f2;
+  --text: #17171a;
+  --text-muted: #55575e;
+  --text-subtle: #83868e;
+  --rule: #e4e4e1;
+  --rule-strong: #cfcfcb;
+  /* One yellow for everything — rules, bullet dots, the masthead diamond,
+     section titles, links. On a light ground it has to be deep enough to
+     carry small bold text (4.2:1 here); a brighter yellow would be close to
+     illegible as type. Dark mode can run the bright value safely. */
+  --accent: #9c7209;
+
+  --font-sans: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+
+  --measure: 47rem;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #121215;
+    --surface: #1c1c20;
+    --text: #eeeef0;
+    --text-muted: #a6a8b0;
+    --text-subtle: #7b7d85;
+    --rule: #2b2b30;
+    --rule-strong: #3a3a41;
+    --accent: #fbbf24;
+  }
+}
+
+/* ---------------------------------------------------------------------------
+   Reset
+--------------------------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+p,
+ul,
+ol,
+li,
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+/* ---------------------------------------------------------------------------
+   Base
+--------------------------------------------------------------------------- */
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: clamp(0.95rem, 0.9rem + 0.25vw, 1.0625rem);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+.resume {
+  max-width: var(--measure);
+  margin-inline: auto;
+  padding: clamp(var(--space-10), 7vw, 4.5rem) var(--space-6) var(--space-12);
+}
+
+/* ---------------------------------------------------------------------------
+   Masthead
+   Two deliberately distinct registers: who he is (name + role + city), then
+   how to reach him (email, profiles) as a separate row of chips.
+--------------------------------------------------------------------------- */
+
+.masthead {
+  text-align: center;
+  padding-bottom: var(--space-8);
+  border-bottom: 1px solid var(--rule);
+}
+
+.masthead__name {
+  font-size: clamp(2.1rem, 1.5rem + 2.8vw, 3.1rem);
+  line-height: 1.05;
+  font-weight: 660;
+  letter-spacing: -0.032em;
+}
+
+.masthead__identity {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  margin-top: var(--space-3);
+  font-size: 1.02em;
+  color: var(--text-muted);
+  letter-spacing: 0.005em;
+}
+
+/* Diamond separator between role and city. */
+.masthead__sep {
+  width: 4px;
+  height: 4px;
+  rotate: 45deg;
+  background: var(--accent);
+  opacity: 0.8;
+  flex: none;
+}
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+}
+
+.contact__item {
+  display: inline-block;
+  font-size: 0.76em;
+  line-height: 1.4;
+  padding: 0.32em 0.78em;
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--text-muted);
+  transition: border-color 120ms ease, color 120ms ease, background 120ms ease;
+}
+
+.contact__item:hover {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface));
+}
+
+/* ---------------------------------------------------------------------------
+   Lede — the opening statement. No heading by design.
+--------------------------------------------------------------------------- */
+
+.lede {
+  margin-top: var(--space-8);
+  font-size: clamp(1.06rem, 1rem + 0.42vw, 1.24rem);
+  line-height: 1.55;
+  letter-spacing: -0.008em;
+  color: var(--text);
+  text-wrap: pretty;
+}
+
+/* ---------------------------------------------------------------------------
+   Sections
+--------------------------------------------------------------------------- */
+
+.section {
+  margin-top: var(--space-10);
+}
+
+.section__title {
+  position: relative;
+  padding-top: var(--space-3);
+  margin-bottom: var(--space-5);
+  font-size: 0.775rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* Short accent rule above each section label. */
+.section__title::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1.75rem;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--accent);
+}
+
+/* ---------------------------------------------------------------------------
+   Skills — narrow columns, each listing its own items beneath the label.
+--------------------------------------------------------------------------- */
+
+.skills__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: var(--space-5) var(--space-6);
+}
+
+/* Labels wrap to two lines at some widths ("Programming & Query Languages")
+   and one at others. Subgrid pins the label and item rows across each visual
+   row so item lists start at the same baseline regardless. */
+.skill-col {
+  display: grid;
+  grid-template-rows: subgrid;
+  grid-row: span 2;
+  align-content: start;
+}
+
+.skill-col__label {
+  font-size: 0.7rem;
+  font-weight: 650;
+  letter-spacing: 0.045em;
+  text-transform: uppercase;
+  color: var(--text);
+  padding-bottom: var(--space-2);
+  margin-bottom: var(--space-2);
+  border-bottom: 1px solid var(--rule);
+}
+
+.skill-col__items li {
+  font-size: 0.875em;
+  line-height: 1.55;
+  color: var(--text-muted);
+}
+
+/* ---------------------------------------------------------------------------
+   Experience
+--------------------------------------------------------------------------- */
+
+/* Separated by space, not a rule — the company name is heavy enough to
+   signal a new entry on its own. */
+.job + .job {
+  margin-top: var(--space-10);
+}
+
+.job__company {
+  font-size: 1.22em;
+  font-weight: 640;
+  letter-spacing: -0.018em;
+}
+
+.job__location {
+  font-weight: 400;
+  font-size: 0.78em;
+  color: var(--text-subtle);
+  margin-left: var(--space-2);
+  letter-spacing: 0;
+}
+
+/* A rule down the left binds a role — or several concurrent ones — to the
+   company heading above it. */
+.role {
+  margin-top: var(--space-4);
+  padding-left: var(--space-4);
+  border-left: 2px solid var(--rule);
+}
+
+.role + .role {
+  margin-top: var(--space-5);
+}
+
+.role__head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-1) var(--space-4);
+}
+
+.role__title {
+  font-size: 0.98em;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.role__type {
+  font-weight: 400;
+  color: var(--text-subtle);
+}
+
+.role__dates {
+  font-size: 0.82em;
+  color: var(--text-subtle);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+}
+
+.role__note {
+  margin-top: var(--space-1);
+  font-size: 0.85em;
+  color: var(--text-subtle);
+  font-style: italic;
+  text-wrap: pretty;
+}
+
+.group {
+  margin-top: var(--space-3);
+}
+
+/* A labelled group (Key Projects) starts a new block within the role rather
+   than continuing the list above it, so it earns extra room and more weight. */
+.group--titled {
+  margin-top: var(--space-5);
+}
+
+.group__label {
+  display: flex;
+  align-items: center;
+  gap: 0.62em;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-bottom: var(--space-3);
+}
+
+/* The same accent bar the section titles carry, turned on its side: it sits
+   between the role's vertical rule and the label rather than above it, which
+   marks the nesting without competing with a section heading. */
+.group__label::before {
+  content: "";
+  flex: none;
+  width: 1.15rem;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--accent);
+}
+
+/* Hanging indent so wrapped lines align under the text, not the marker. */
+.bullets {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.bullets li {
+  position: relative;
+  padding-left: 1.05em;
+  color: var(--text-muted);
+  font-size: 0.94em;
+  text-wrap: pretty;
+}
+
+.bullets li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.62em;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent);
+}
+
+/* ---------------------------------------------------------------------------
+   Projects
+--------------------------------------------------------------------------- */
+
+.project + .project {
+  margin-top: var(--space-5);
+}
+
+.project__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-3);
+}
+
+.project__name {
+  font-size: 1em;
+  font-weight: 600;
+}
+
+.project__links {
+  display: flex;
+  gap: var(--space-3);
+  font-size: 0.82em;
+}
+
+.project__links a {
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.project__blurb {
+  margin-top: var(--space-1);
+  color: var(--text-muted);
+  font-size: 0.94em;
+  text-wrap: pretty;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1) var(--space-2);
+  margin-top: var(--space-2);
+}
+
+.tags li {
+  font-size: 0.75em;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 0.1em 0.6em;
+}
+
+/* ---------------------------------------------------------------------------
+   Education
+--------------------------------------------------------------------------- */
+
+.school + .school {
+  margin-top: var(--space-4);
+}
+
+.school__name {
+  font-size: 1.05em;
+  font-weight: 620;
+  letter-spacing: -0.012em;
+}
+
+.school__detail {
+  color: var(--text-muted);
+  font-size: 0.92em;
+}
+
+.school__minor {
+  color: var(--text-subtle);
+  font-size: 0.88em;
+}
+
+/* --------------------------------------------------------------------------- */
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
