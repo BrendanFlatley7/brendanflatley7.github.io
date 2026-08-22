@@ -66,7 +66,7 @@ async function renderPdf(browser, id) {
     : `${BASE_NAME}.pdf`;
   const outPath = path.join(OUT_DIR, fileName);
 
-  console.log(`\n→ ${variant ? variant.target : "Neutral (canonical)"}`);
+  console.log(`\n→ ${variant ? variant.label : "Neutral (canonical)"}`);
   console.log("  building…");
 
   await build({

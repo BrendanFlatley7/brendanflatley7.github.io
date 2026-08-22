@@ -11,10 +11,12 @@ import type { BulletGroup, SkillGroup } from "../resume";
 export interface Variant {
   /** CLI value: `npm run pdf -- --variant=<id>` */
   id: string;
-  /** Goes into the PDF filename. */
+  /**
+   * Goes into the PDF filename. Describe the emphasis, not the employer —
+   * this repo is public. Notes on which posting a variant is for belong in
+   * the gitignored DOCS.md.
+   */
   label: string;
-  /** What this variant is aimed at, for your own reference. */
-  target: string;
 
   headline?: string;
   summary?: string;

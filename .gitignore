@@ -28,3 +28,6 @@ out/
 
 # local-only env (phone number)
 .env*.local
+
+# full project documentation — local only, see "What's gitignored" in README.md
+DOCS.md
