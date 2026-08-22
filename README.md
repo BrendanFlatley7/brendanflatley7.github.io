@@ -22,28 +22,6 @@ A few conventions:
 - **Empty values disappear.** Blank profile links, an absent `location`, an empty `additional`
   skills list — none of them render.
 
-## Job-specific variants
-
-`src/data/resume.ts` is the neutral, canonical version — it's what the public site always renders.
-A **variant** is a thin overlay for one application, living in
-[`src/data/variants/`](src/data/variants):
-
-| Variant | Aimed at |
-|---|---|
-| `content` | Netflix · Analytics Engineer 4 — Content Data Science & Engineering |
-| `infra` | Netflix · Analytics Engineer 5 — Infrastructure Efficiency & Productivity |
-
-A variant may override `summary`, `headline`, and `skills`, and may replace a specific role's
-bullet groups via `roleGroups` (keyed by company, then role title). Anything it doesn't mention
-falls through to the base — so the underlying facts are stated once, and a variant only re-frames,
-re-orders, and selects from them.
-
-Each variant carries its own shortlist of Key Projects — the ones that speak to that posting, not
-every project you've done. That's the main thing to revisit when targeting a new role.
-
-To add one, copy an existing file in `src/data/variants/`, then register it in
-[`src/data/resolve.ts`](src/data/resolve.ts).
-
 **The site never renders a variant, and never renders project detail.** `RESUME_VARIANT` and
 `RESUME_EXPORT` are injected only by the PDF script, so `npm run dev`, `npm run build`, and the
 deploy workflow all produce the neutral overview.
