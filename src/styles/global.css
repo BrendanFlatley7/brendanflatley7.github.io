@@ -279,39 +279,31 @@ a:focus-visible {
 }
 
 /* ---------------------------------------------------------------------------
-   Skills — narrow columns, each listing its own items beneath the label.
+   Skills — one line per category, label first, items run inline after it.
 --------------------------------------------------------------------------- */
 
-.skills__grid {
+.skill-lines {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-  gap: var(--space-5) var(--space-6);
+  gap: var(--space-2);
 }
 
-/* Labels wrap to two lines at some widths ("Programming & Query Languages")
-   and one at others. Subgrid pins the label and item rows across each visual
-   row so item lists start at the same baseline regardless. */
-.skill-col {
-  display: grid;
-  grid-template-rows: subgrid;
-  grid-row: span 2;
-  align-content: start;
-}
-
-.skill-col__label {
-  font-size: 0.7rem;
-  font-weight: 650;
-  letter-spacing: 0.045em;
-  text-transform: uppercase;
-  color: var(--text);
-  padding-bottom: var(--space-2);
-  margin-bottom: var(--space-2);
-  border-bottom: 1px solid var(--rule);
-}
-
-.skill-col__items li {
+.skill-line {
   font-size: 0.875em;
   line-height: 1.55;
+  color: var(--text-muted);
+  /* Wrapped items hang under the items, not under the label. */
+  padding-left: var(--space-4);
+  text-indent: calc(-1 * var(--space-4));
+}
+
+.skill-line__label {
+  font-weight: 650;
+  color: var(--text);
+}
+
+.skill-line__label::after {
+  content: " — ";
+  font-weight: 400;
   color: var(--text-muted);
 }
 

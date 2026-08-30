@@ -1,57 +1,43 @@
 ---
 import Section from "./Section.astro";
 import { resume } from "../data/resolve";
-import type { SkillGroup } from "../data/resume";
 
 interface Props {
   /**
-   * The site shows one flat strip of what he works with; the grouped grid,
-   * and the professional skills alongside it, are the resume's job.
+   * The site shows one flat strip of what he works with; the labeled lines
+   * are the resume's job.
    */
   compact?: boolean;
 }
 
 const { compact = false } = Astro.props;
-const { technical, additional } = resume.skills;
-
-const sections: [title: string, groups: SkillGroup[]][] = [
-  ["Technical Skills", technical],
-  ["Professional Skills", additional],
-];
+const { technical } = resume.skills;
 
 // Flattened in source order, deduped — some tools reasonably sit in two groups.
 const strip = [...new Set(technical.flatMap((group) => group.items))];
 ---
 
 {
-  compact ? (
-    strip.length > 0 && (
-      <Section title="Tools & Techniques">
-        <ul class="chips">
-          {strip.map((item) => (
-            <li>{item}</li>
-          ))}
-        </ul>
-      </Section>
-    )
-  ) : (
-    sections.map(([title, groups]) =>
-      groups.length > 0 ? (
-        <Section title={title}>
-          <div class="skills__grid">
-            {groups.map((group) => (
-              <div class="skill-col">
-                <h3 class="skill-col__label">{group.group}</h3>
-                <ul class="skill-col__items">
-                  {group.items.map((item) => (
-                    <li>{item}</li>
-                  ))}
-                </ul>
-              </div>
+  compact
+    ? strip.length > 0 && (
+        <Section title="Tools & Techniques">
+          <ul class="chips">
+            {strip.map((item) => (
+              <li>{item}</li>
             ))}
-          </div>
+          </ul>
         </Section>
-      ) : null
-    )
-  )
+      )
+    : technical.length > 0 && (
+        <Section title="Technical Skills">
+          <ul class="skill-lines">
+            {technical.map((group) => (
+              <li class="skill-line">
+                <span class="skill-line__label">{group.group}</span>
+                {group.items.join(", ")}
+              </li>
+            ))}
+          </ul>
+        </Section>
+      )
 }
