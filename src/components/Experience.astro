@@ -1,7 +1,18 @@
 ---
 import Section from "./Section.astro";
+import ToolIcon from "./ToolIcon.astro";
 import { resume } from "../data/resolve";
 import { toISOMonth } from "../utils/format";
+
+interface Props {
+  /**
+   * The PDF carries every bullet. The site shows where he worked, when, and
+   * what he worked with — the detail belongs on the resume he sends.
+   */
+  detail?: boolean;
+}
+
+const { detail = true } = Astro.props;
 ---
 
 <Section title="Experience">
@@ -20,7 +31,7 @@ import { toISOMonth } from "../utils/format";
           const startISO = toISOMonth(role.start);
           const endISO = role.end ? toISOMonth(role.end) : undefined;
           return (
-            <div class="role">
+            <div class:list={["role", !detail && "role--plain"]}>
               <div class="role__head">
                 <h4 class="role__title">
                   {role.title}
@@ -39,21 +50,30 @@ import { toISOMonth } from "../utils/format";
 
               {role.note && <p class="role__note">{role.note}</p>}
 
-              {role.groups.map((group) => (
-                <div class:list={["group", group.label && "group--titled"]}>
-                  {/* A lone group needs no subheading — there is nothing to
-                      distinguish it from. This is what the site sees once the
-                      export-only project groups are filtered out. */}
-                  {group.label && role.groups.length > 1 && (
-                    <h5 class="group__label">{group.label}</h5>
+              {detail
+                ? role.groups.map((group) => (
+                    <div class:list={["group", group.label && "group--titled"]}>
+                      {/* A lone group needs no subheading — there is nothing to
+                          distinguish it from. This is what the site sees once the
+                          export-only project groups are filtered out. */}
+                      {group.label && role.groups.length > 1 && (
+                        <h5 class="group__label">{group.label}</h5>
+                      )}
+                      <ul class="bullets">
+                        {group.bullets.map((bullet) => (
+                          <li>{bullet}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))
+                : role.tools &&
+                  role.tools.length > 0 && (
+                    <ul class="toolstrip">
+                      {role.tools.map((slug) => (
+                        <ToolIcon slug={slug} />
+                      ))}
+                    </ul>
                   )}
-                  <ul class="bullets">
-                    {group.bullets.map((bullet) => (
-                      <li>{bullet}</li>
-                    ))}
-                  </ul>
-                </div>
-              ))}
             </div>
           );
         })}

@@ -5,6 +5,8 @@
  * Both the web page and the generated PDF render from it.
  */
 
+import type { ToolSlug } from "./tools";
+
 export interface BulletGroup {
   /** Optional subheading, e.g. "Key Projects". Omit for ungrouped lead bullets. */
   label?: string;
@@ -20,6 +22,12 @@ export interface BulletGroup {
 export interface Role {
   title: string;
   start: string;
+  /**
+   * Tools used in this role, shown as brand marks beside it on the site only —
+   * the PDF carries the bullets instead. Keep it to the handful that actually
+   * characterise the work; see src/data/tools.ts for the valid slugs.
+   */
+  tools?: ToolSlug[];
   /** Omit for a role that is still current. */
   end?: string;
   /** e.g. "Contract" */
@@ -45,6 +53,26 @@ export interface Project {
   /** Source repository. */
   repo?: string;
   tech: string[];
+  /**
+   * The project's own logo or wordmark, shown on the site's project cards so
+   * each one reads the way it does on its own site. Vendored into
+   * public/projects/ by `npm run marks`; that script prints every value here.
+   * Omit and the card falls back to the project name set in type.
+   */
+  mark?: {
+    src: string;
+    width: number;
+    height: number;
+    /** Card background behind the mark, sampled from the live site. */
+    plaque: string;
+    /**
+     * "inset" floats the mark on the plaque with room around it — right for a
+     * wordmark. "bleed" runs it edge to edge, which is what artwork carrying
+     * its own textured field needs: no flat colour can match a gradient, so
+     * any inset would show a seam.
+     */
+    fit?: "inset" | "bleed";
+  };
 }
 
 export interface SkillGroup {
@@ -62,7 +90,10 @@ export interface School {
 export interface Resume {
   name: string;
   headline: string;
+  /** Where he lives now. */
   location: string;
+  /** Where he is from. Omit to render the location line on its own. */
+  hometown?: string;
   email: string;
   phone: string | undefined;
   links: { github: string; linkedin: string; website: string };
@@ -87,6 +118,7 @@ export const resume: Resume = {
   name: "Brendan Flatley",
   headline: "Analytics Engineer",
   location: "Los Angeles, CA",
+  hometown: "Erie, Pennsylvania",
   email: "brendanflatley@icloud.com",
   phone,
 
@@ -180,6 +212,7 @@ export const resume: Resume = {
         {
           title: "Analytics Engineer",
           start: "Sep 2022",
+          tools: ["sql", "python", "dbt", "tableau", "prefect"],
           groups: [
             {
               bullets: [
@@ -231,6 +264,7 @@ export const resume: Resume = {
           type: "Contract",
           start: "Jun 2022",
           end: "Sep 2022",
+          tools: ["sql", "tableau"],
           groups: [
             {
               bullets: [
@@ -248,6 +282,7 @@ export const resume: Resume = {
           title: "Business Intelligence Developer",
           start: "Mar 2020",
           end: "Jun 2022",
+          tools: ["sql", "qlik", "tableau", "matillion"],
           groups: [
             {
               bullets: [
@@ -268,6 +303,46 @@ export const resume: Resume = {
         },
       ],
     },
+    {
+      company: "AmeriHealth Administrators",
+      roles: [
+        {
+          title: "Business Analyst",
+          type: "Contract",
+          start: "Oct 2019",
+          end: "Mar 2020",
+          tools: ["sql", "tableau"],
+          groups: [
+            {
+              bullets: [
+                // TODO(Brendan): the LinkedIn entry continues past this — it
+                // goes on about documenting requirements in client meetings.
+                // Finish the sentence in your own words.
+                "Facilitated updates and new enrollment of client business insurance plans and coverages",
+              ],
+            },
+          ],
+        },
+      ],
+    },
+    {
+      company: "msg global solutions",
+      roles: [
+        {
+          title: "Associate Consultant",
+          start: "Jun 2018",
+          end: "Oct 2019",
+          tools: ["sap", "sql"],
+          groups: [
+            {
+              bullets: [
+                "Supported SAP implementation and migration projects as a Project Management Officer for multiple Fortune 500 companies in the insurance industry",
+              ],
+            },
+          ],
+        },
+      ],
+    },
   ] as Job[],
 
   /**
@@ -276,6 +351,7 @@ export const resume: Resume = {
    *
    * `tech` renders as tags beneath the blurb; leave it empty to omit them.
    * Add `repo` alongside `url` if you ever make the source public.
+   * `mark` values come straight from `npm run marks`.
    */
   projects: [
     {
@@ -284,13 +360,26 @@ export const resume: Resume = {
         "Sourced and created historical data source for NFL odds and results for prediction model, including daily cron jobs to track odds changes and hedging opportunities on current bets.",
       url: "https://my-little-gambler.vercel.app",
       tech: [],
+      mark: {
+        src: "/projects/my-little-gambler.png",
+        width: 1200,
+        height: 109,
+        plaque: "#fefefe",
+      },
     },
     {
       name: "Hi / Lo",
       blurb:
-        "Tracks the High / Low side game for a golf round between 4 players.",
+        "Tracks a 2v2 golf side game.",
       url: "https://hi-lo-psi.vercel.app/game/new",
       tech: [],
+      mark: {
+        src: "/projects/hi-lo.webp",
+        width: 840,
+        height: 320,
+        plaque: "#efeddc",
+        fit: "bleed",
+      },
     },
   ] as Project[],
 

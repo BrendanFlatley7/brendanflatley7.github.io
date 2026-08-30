@@ -2,7 +2,7 @@
 import "../styles/global.css";
 import "../styles/print.css";
 
-import { resume } from "../data/resolve";
+import { resume, isExport } from "../data/resolve";
 import Header from "../components/Header.astro";
 import Summary from "../components/Summary.astro";
 import Skills from "../components/Skills.astro";
@@ -30,13 +30,36 @@ const description = resume.summary.slice(0, 155);
     <meta name="color-scheme" content="light dark" />
   </head>
   <body>
-    <main class="resume">
-      <Header />
-      <Summary />
-      <Skills />
-      <Experience />
-      <Projects />
-      <Education />
-    </main>
+    {
+      /*
+       * Two surfaces, one set of components. The PDF is the full resume:
+       * skills, then every role's bullets. The site is a short personal page —
+       * who he is beside what he's built, then where he's worked and what with.
+       * `isExport` is a build-time constant, so only one branch ships.
+       */
+    }
+    {
+      isExport ? (
+        <main class="resume">
+          <Header />
+          <Summary />
+          <Skills />
+          <Experience />
+          <Projects />
+          <Education />
+        </main>
+      ) : (
+        <main class="resume resume--site">
+          <Header />
+          <div class="intro">
+            <Summary />
+            <Projects showcase />
+          </div>
+          <Experience detail={false} />
+          <Skills compact />
+          <Education />
+        </main>
+      )
+    }
   </body>
 </html>

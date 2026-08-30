@@ -1,16 +1,51 @@
 # Resume
 
-A personal resume site, statically generated with [Astro](https://astro.build) and deployed to
-GitHub Pages. The same page doubles as the source for a printable PDF, generated locally.
+A personal site, statically generated with [Astro](https://astro.build) and deployed to
+GitHub Pages. The same content is also the source for a printable resume PDF, generated locally.
 
 ## How it works
 
-Resume content lives in [`src/data/resume.ts`](src/data/resume.ts) — summary, skills, experience,
+Content lives in [`src/data/resume.ts`](src/data/resume.ts) — summary, skills, experience,
 projects, education — and the components render from it. Roles are nested under employers, so one
 company can hold several roles, each with labeled bullet groups that render as subheadings.
 
 Empty values disappear: a blank profile link, an absent location, or an empty section simply
 doesn't render.
+
+### Two surfaces, one set of components
+
+The site and the PDF show the same facts at different depths, so
+[`src/pages/index.astro`](src/pages/index.astro) branches on the build-time `isExport` flag from
+[`src/data/resolve.ts`](src/data/resolve.ts) and each section component takes a mode prop rather
+than being duplicated.
+
+| | Site | PDF |
+|---|---|---|
+| Order | summary beside the projects, then experience, tools, education | summary, skills, experience, projects, education |
+| Experience | company, role, dates, and the tools it was worked in | every bullet, plus the `exportOnly` project detail |
+| Skills | one flat strip of the technical list | the full grouped grid, technical and professional |
+| Projects | cards wearing each project's own logo | name, blurb, and link as text |
+
+Only the branch that matches the build ships — `isExport` is a constant, so the other one is
+dropped from the bundle.
+
+### Project marks
+
+The project cards show each project's own logo or wordmark, vendored into `public/projects/`:
+
+```bash
+npm run marks
+```
+
+The script downloads or screenshots each mark, trims it to its artwork, and prints the values to
+paste into that project's `mark` in `src/data/resume.ts`. Run it once and commit the results;
+re-run only if a project rebrands. Vendoring rather than hotlinking keeps the page free of web
+fonts, keeps the build offline-capable, and lets the marks render in generated PDFs.
+
+Tool logos beside each role come from `src/icons/`, keyed by the slugs in
+[`src/data/tools.ts`](src/data/tools.ts). A slug with no artwork there falls back to its name set
+in small type — which is what Tableau and SQL do, since Simple Icons carries no Tableau mark and
+SQL is a language rather than a brand.
 
 ## Local development
 
