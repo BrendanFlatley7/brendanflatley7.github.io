@@ -38,8 +38,9 @@ const description =
     {
       /*
        * Two surfaces, one set of components. The PDF is the full resume:
-       * skills, then every role's bullets. The site is a short personal page —
-       * who he is beside what he's built, then where he's worked and what with.
+       * every role's bullets, with skills reading as a reference list near the
+       * end. The site is a short personal page — who he is beside what he's
+       * built, then where he's worked and what with.
        * `isExport` is a build-time constant, so only one branch ships.
        */
     }
@@ -48,16 +49,16 @@ const description =
         <main class="resume">
           <Header />
           <Summary />
-          <Skills />
           <Experience />
           <Projects />
+          <Skills />
           <Education />
         </main>
       ) : (
         <main class="resume resume--site">
           <Header />
           <div class="intro">
-            <Summary />
+            <Summary heading />
             <Projects showcase />
           </div>
           <Experience detail={false} />

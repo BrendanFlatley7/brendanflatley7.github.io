@@ -21,7 +21,7 @@ than being duplicated.
 
 | | Site | PDF |
 |---|---|---|
-| Order | summary beside the projects, then experience, tools, education | summary, skills, experience, projects, education |
+| Order | summary beside the projects, then experience, tools, education | summary, experience, projects, skills, education |
 | Experience | company, role, dates, and the tools it was worked in | every bullet, plus the `exportOnly` project detail |
 | Skills | one flat strip of the technical list | the full grouped grid, technical and professional |
 | Projects | cards wearing each project's own logo | name, blurb, and link as text |
@@ -74,24 +74,6 @@ machine that generates them.
 To tune pagination, edit [`src/styles/print.css`](src/styles/print.css). Chrome's print preview
 (Cmd+P on the dev server) shows exactly what `npm run pdf` will produce.
 
-## Variants
-
-`src/data/resume.ts` is the canonical resume and the only thing the site ever renders. A *variant*
-is a thin overlay in [`src/data/variants/`](src/data/variants) that re-frames the summary, re-orders
-skills, and swaps a role's bullet groups, falling through to the base resume for anything it doesn't
-mention — so the underlying facts are stated once.
-
-Variants affect locally generated PDFs only:
-
-```bash
-npm run pdf -- --variant=<id>   # one variant
-npm run pdf -- --all            # neutral + every variant
-```
-
-To add one, copy an existing file in `src/data/variants/` and register it in
-[`src/data/resolve.ts`](src/data/resolve.ts). Name variants after the *emphasis* they carry, not
-after any employer — this repo is public.
-
 ## What's gitignored
 
 This repo is public, so a few things are kept out of it deliberately:
@@ -100,7 +82,7 @@ This repo is public, so a few things are kept out of it deliberately:
 |---|---|
 | `.env.local` | Contact details that shouldn't be scraped off the published HTML. See [Configuration](#configuration). |
 | `out/` | Generated PDFs — build artifacts, and they carry the private values above. |
-| `DOCS.md` | Full project documentation, including notes on what each variant targets. |
+| `DOCS.md` | Full project documentation. |
 
 ## Configuration
 
