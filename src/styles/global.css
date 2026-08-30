@@ -279,43 +279,65 @@ a:focus-visible {
 }
 
 /* ---------------------------------------------------------------------------
-   Skills — narrow columns, each listing its own items beneath the label.
+   Skills — one line per category, label first, items run inline after it.
 --------------------------------------------------------------------------- */
 
-.skills__grid {
+.skill-lines {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
-  gap: var(--space-5) var(--space-6);
+  gap: var(--space-2);
 }
 
-/* Labels wrap to two lines at some widths ("Programming & Query Languages")
-   and one at others. Subgrid pins the label and item rows across each visual
-   row so item lists start at the same baseline regardless. */
-.skill-col {
-  display: grid;
-  grid-template-rows: subgrid;
-  grid-row: span 2;
-  align-content: start;
+/* Pill rows are taller than text rows, so they need more air between groups
+   to keep a label reading as the head of the row below it. */
+.skill-lines:has(.skill-line--chips) {
+  gap: var(--space-4);
 }
 
-.skill-col__label {
-  font-size: 0.7rem;
-  font-weight: 650;
-  letter-spacing: 0.045em;
-  text-transform: uppercase;
-  color: var(--text);
-  padding-bottom: var(--space-2);
-  margin-bottom: var(--space-2);
-  border-bottom: 1px solid var(--rule);
-}
-
-.skill-col__items li {
+.skill-line {
   font-size: 0.875em;
   line-height: 1.55;
   color: var(--text-muted);
+  /* Wrapped items hang under the items, not under the label. */
+  padding-left: var(--space-4);
+  text-indent: calc(-1 * var(--space-4));
 }
 
-/* The site's flattened version of the same list: one wrapped strip, no groups. */
+.skill-line__label {
+  font-weight: 650;
+  color: var(--text);
+}
+
+.skill-line__label::after {
+  content: " — ";
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+/* The site keeps the same four labels but sets each group's items as pills,
+   so the label leads a wrapping row rather than a run of text. */
+.skill-line--chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  padding-left: 0;
+  text-indent: 0;
+}
+
+.skill-line--chips .skill-line__label::after {
+  content: none;
+}
+
+/* Narrow enough that most rows wrap their pills under the label anyway —
+   stack every label so one short row does not sit inline beside the rest. */
+@media (max-width: 40rem) {
+  .skill-line--chips {
+    flex-direction: column;
+    align-items: start;
+    gap: var(--space-2);
+  }
+}
+
 .chips {
   display: flex;
   flex-wrap: wrap;

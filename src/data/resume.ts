@@ -98,7 +98,7 @@ export interface Resume {
   phone: string | undefined;
   links: { github: string; linkedin: string; website: string };
   summary: string;
-  skills: { technical: SkillGroup[]; additional: SkillGroup[] };
+  skills: { technical: SkillGroup[] };
   experience: Job[];
   projects: Project[];
   education: School[];
@@ -132,68 +132,40 @@ export const resume: Resume = {
   skills: {
     technical: [
       {
-        group: "Programming & Query Languages",
-        items: ["SQL (Advanced)", "Python", "Spark"],
-      },
-      {
-        group: "Analysis & Modeling",
+        group: "Languages & Tools",
         items: [
-          "Regression",
-          "Time series",
-          "Cohort analysis",
-          "Clustering & segmentation",
-          "Forecasting",
+          "SQL (Advanced)",
+          "Python",
+          "Tableau",
+          "dbt",
+          "Prefect",
+          "Git",
+          "Docker",
+          "Spark",
         ],
       },
       {
-        group: "Data Platforms",
-        items: ["Redshift", "S3", "Azure", "Snowflake"],
-      },
-      {
-        group: "Data Engineering & Transformation",
-        items: ["Prefect", "dbt", "Tableau Prep", "Matillion"],
-      },
-      {
-        group: "Data Modeling & Warehousing",
+        group: "Data Modeling",
         items: [
-          "Dimensional Modeling (Kimball)",
-          "Incremental Pipelines",
+          "Dimensional (Kimball)",
+          "Incremental pipelines",
           "CDC",
           "SCD",
         ],
       },
       {
-        group: "Tools & Workflow",
+        group: "Analysis",
         items: [
-          "Tableau Cloud",
-          "Tableau Desktop",
-          "GitHub",
-          "Docker",
-          "DBeaver",
-          "JIRA",
-        ],
-      },
-    ] as SkillGroup[],
-
-    // TODO(Brendan): review and edit. Drafted from what the experience below
-    // already demonstrates — nothing here is invented.
-    additional: [
-      {
-        group: "Partnership & Communication",
-        items: [
-          "Stakeholder facilitation & requirements gathering",
-          "Translating business questions into analysis",
-          "Executive-level risk communication",
+          "Time series",
+          "Cohort",
+          "Forecasting",
+          "Clustering & segmentation",
+          "Regression",
         ],
       },
       {
-        group: "Leadership & Ownership",
-        items: [
-          "Interim team leadership",
-          "Roadmap prioritization",
-          "Technical review & mentorship",
-          "Data governance & access management",
-        ],
+        group: "Platforms",
+        items: ["Redshift", "S3", "Azure", "Snowflake"],
       },
     ] as SkillGroup[],
   },
