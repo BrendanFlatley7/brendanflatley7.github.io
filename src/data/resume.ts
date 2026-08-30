@@ -110,10 +110,7 @@ export interface Resume {
  */
 const phone: string | undefined = import.meta.env.RESUME_PHONE;
 
-/**
- * The neutral, canonical resume. This is what the public site renders.
- * Job-specific PDFs layer overrides on top — see src/data/variants/.
- */
+/** The canonical resume — the single source for both the site and the PDF. */
 export const resume: Resume = {
   name: "Brendan Flatley",
   headline: "Analytics Engineer",
@@ -130,7 +127,7 @@ export const resume: Resume = {
   },
 
   summary:
-    "Analyst and data modeler driving our organization-wide dbt implementation, modeling the data and setting the standards analysts, engineers, and business users rely on. Own data projects from feasibility to delivery and, as project lead, the business logic behind every model that ships.",
+    "Analyst and data modeler driving MetLife Legal Plans' organization-wide dbt implementation, modeling the data and setting the standards analysts, engineers, and business users rely on. Own data projects from feasibility to delivery and, as project lead, the business logic behind every model that ships.",
 
   skills: {
     technical: [
@@ -216,24 +213,22 @@ export const resume: Resume = {
           groups: [
             {
               bullets: [
-                "Sole owner of the team's dbt implementation, replacing legacy data preparation processes with a structured, version-controlled transformation layer — architecting the data models, developing the pipeline, and managing the team's analytics flows end-to-end",
-              ],
-            },
-            {
-              bullets: [
-                "Administer Tableau Cloud site, managing governance, permissions, licenses, and self-serve data access for 300+ users",
-                "Facilitate stakeholder meetings to gather requirements, define business logic, and deliver reporting",
-                "Own and maintain the analytics layer by developing new data models and reviewing contributions from other data team members",
+                "Lead the team's dbt implementation, replacing legacy data preparation with a version-controlled transformation layer of ~60 analytics-ready models, and own the architecture, business logic, and standards the team builds against",
+                "Built Tableau dashboards and export templates that replaced a legacy reporting interface, letting account and operations teams self-serve utilization and membership data for 2,000+ customers and cutting report generation time by 90%",
+                "Deliver time series and cohort analysis on claim volume, claim mix, and member retention across plan tiers, defining the metrics account and operations teams reference in pricing decisions",
+                "Built lookup tools the call center depends on daily to meet service level agreements",
+                "Review and approve modeling work from four data team members, verifying business logic before it ships",
+                "Scope incoming requests for feasibility and architectural fit, including redirecting operational workflows that did not belong downstream in the warehouse to the teams that own them",
               ],
             },
             {
               label: "Key Projects",
               exportOnly: true,
               bullets: [
-                "Rebuilt a fragile, application-critical data pipeline using Python and Prefect — the prior process fully rebuilt a production table every 15 minutes with a ~7-minute runtime, causing intermittent unavailability; replaced it with an incremental load and added indexing, making the table consistently available and faster to query",
-                "Developed automated daily SFTP pipelines to securely transfer member PII to a third-party service supporting ~200,000 monthly members, and created monthly reporting processes and visualizations for performance metrics and invoicing",
-                "Designed and implemented a process to identify lapsing members for a new product campaign, reaching ~40,000 members monthly and generating over $1M in revenue in its first year",
-                "Created file templates and corresponding Tableau workbooks to export approved marketing materials, leading to a 90% reduction in report generation time",
+                "Re-modeled the claims data preparation process as one of the first models deployed in the new dbt environment, identifying and correcting logic errors in the inherited process, rebuilding the estimated member savings calculation with refined logic for claim subtypes such as Chapter 7 versus Chapter 13 bankruptcy, and presenting the correction and its impact on previously reported totals to the executive team",
+                "Designed and implemented a process to identify lapsing members by comparing membership state across snapshots over time, feeding a new product campaign that reached ~40,000 members monthly and generated over $1M in revenue in its first year",
+                "Own the member data feeding a daily transfer to a third-party service supporting ~200,000 monthly members, including daily enrollment workflows and monthly reporting and invoicing processes",
+                "Rebuilt a fragile, application-critical data pipeline using Python and Prefect. The prior process fully rebuilt a production table every 15 minutes with a ~7-minute runtime, causing intermittent unavailability; replaced it with an incremental load and added indexing, making the table consistently available and faster to query",
               ],
             },
 ],

@@ -1,12 +1,14 @@
 ---
 interface Props {
   title: string;
+  /** Modifier appended to `.section`, for the few that need their own sizing. */
+  class?: string;
 }
 
-const { title } = Astro.props;
+const { title, class: extra } = Astro.props;
 ---
 
-<section class="section">
+<section class:list={["section", extra]}>
   <h2 class="section__title">{title}</h2>
   <slot />
 </section>

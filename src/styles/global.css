@@ -194,7 +194,8 @@ a:focus-visible {
 }
 
 /* ---------------------------------------------------------------------------
-   Lede — the opening statement. No heading by design.
+   Lede — the opening statement. Bare on the resume, where its position says
+   what it is; under an "About Me" heading on the site.
 --------------------------------------------------------------------------- */
 
 .lede {
@@ -204,6 +205,11 @@ a:focus-visible {
   letter-spacing: -0.008em;
   color: var(--text);
   text-wrap: pretty;
+}
+
+/* The section already carries the leading; the paragraph shouldn't add to it. */
+.section .lede {
+  margin-top: 0;
 }
 
 /* ---------------------------------------------------------------------------
@@ -225,17 +231,18 @@ a:focus-visible {
 /* Flex rather than a grid so the two can be weighted: the cards carry images
    and need the room, the summary is a paragraph. They wrap to one column as
    soon as both bases stop fitting, which is the breakpoint without the query. */
-.intro > .lede {
-  flex: 1 1 18rem;
-}
-
 .intro > .section {
   flex: 1.35 1 24rem;
 }
 
+/* Same specificity as the rule above, so order decides: the summary column
+   stays the narrower of the two. */
+.intro > .section--lede {
+  flex: 1 1 18rem;
+}
+
 /* Both children carry their own top margin for the stacked layout; inside the
    grid the row gap already does that work. */
-.intro > .lede,
 .intro > .section {
   margin-top: 0;
 }

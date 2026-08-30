@@ -7,9 +7,7 @@
  * This never runs in CI. The output lands in a gitignored directory, so the
  * generated PDFs are not published anywhere.
  *
- *   npm run pdf                          # neutral canonical resume
- *   npm run pdf -- --variant=content     # tailored to a specific posting
- *   npm run pdf -- --all                 # neutral + every variant
+ *   npm run pdf
  */
 
 import { build, preview } from "astro";
@@ -18,37 +16,8 @@ import { existsSync } from "node:fs";
 import { mkdir, stat } from "node:fs/promises";
 import path from "node:path";
 
-import { contentVariant } from "../src/data/variants/content.ts";
-import { infraVariant } from "../src/data/variants/infra.ts";
-
-const VARIANTS = Object.fromEntries(
-  [contentVariant, infraVariant].map((v) => [v.id, v])
-);
-
 const OUT_DIR = "out";
-const BASE_NAME = "Brendan-Flatley-Resume";
-
-// --- arguments ------------------------------------------------------------
-
-const argv = process.argv.slice(2);
-const all = argv.includes("--all");
-const variantArg = argv
-  .find((a) => a.startsWith("--variant"))
-  ?.split("=")[1]
-  ?.trim();
-
-if (variantArg && !VARIANTS[variantArg]) {
-  console.error(
-    `\n  ! Unknown variant "${variantArg}".\n` +
-      `    Available: ${Object.keys(VARIANTS).join(", ")}\n`
-  );
-  process.exit(1);
-}
-
-/** null means the neutral, canonical resume. */
-const targets = all
-  ? [null, ...Object.keys(VARIANTS)]
-  : [variantArg ?? null];
+const OUT_PATH = path.join(OUT_DIR, "Brendan-Flatley-Resume.pdf");
 
 if (!existsSync(".env.local")) {
   console.warn(
@@ -59,22 +28,13 @@ if (!existsSync(".env.local")) {
 
 // --- render ---------------------------------------------------------------
 
-async function renderPdf(browser, id) {
-  const variant = id ? VARIANTS[id] : null;
-  const fileName = variant
-    ? `${BASE_NAME}-${variant.label}.pdf`
-    : `${BASE_NAME}.pdf`;
-  const outPath = path.join(OUT_DIR, fileName);
-
-  console.log(`\n→ ${variant ? variant.label : "Neutral (canonical)"}`);
-  console.log("  building…");
+async function renderPdf(browser) {
+  console.log("\n  building…");
 
   await build({
     logLevel: "error",
     vite: {
-      // Baked in at build time so src/data/resolve.ts picks the right overlay.
       define: {
-        "import.meta.env.RESUME_VARIANT": JSON.stringify(id ?? undefined),
         // Unlocks the `exportOnly` bullet groups (Key Projects). The site
         // build never sets this, so project detail stays out of the public page.
         "import.meta.env.RESUME_EXPORT": "true",
@@ -95,7 +55,7 @@ async function renderPdf(browser, id) {
 
     await mkdir(OUT_DIR, { recursive: true });
     await page.pdf({
-      path: outPath,
+      path: OUT_PATH,
       printBackground: true,
       // Let the @page rule in print.css decide paper size and margins.
       preferCSSPageSize: true,
@@ -103,8 +63,8 @@ async function renderPdf(browser, id) {
     });
     await page.close();
 
-    const { size } = await stat(outPath);
-    console.log(`  ✓ ${outPath}  (${(size / 1024).toFixed(0)} KB)`);
+    const { size } = await stat(OUT_PATH);
+    console.log(`  ✓ ${OUT_PATH}  (${(size / 1024).toFixed(0)} KB)`);
   } finally {
     await server.stop();
   }
@@ -113,9 +73,7 @@ async function renderPdf(browser, id) {
 let browser;
 try {
   browser = await chromium.launch();
-  for (const id of targets) {
-    await renderPdf(browser, id);
-  }
+  await renderPdf(browser);
   console.log("");
 } catch (error) {
   if (String(error).includes("Executable doesn't exist")) {

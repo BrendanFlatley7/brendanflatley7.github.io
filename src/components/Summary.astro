@@ -1,6 +1,25 @@
 ---
+import Section from "./Section.astro";
 import { resume } from "../data/resolve";
+
+interface Props {
+  /**
+   * The site gives it an "About Me" heading so it sits in the same rhythm as
+   * the other sections. The resume opens with it, where a heading would only
+   * label what the position on the page already says.
+   */
+  heading?: boolean;
+}
+
+const { heading = false } = Astro.props;
 ---
 
-{/* Deliberately has no section heading — it reads as the opening statement. */}
-<p class="lede">{resume.summary}</p>
+{
+  heading ? (
+    <Section title="About Me" class="section--lede">
+      <p class="lede">{resume.summary}</p>
+    </Section>
+  ) : (
+    <p class="lede">{resume.summary}</p>
+  )
+}
