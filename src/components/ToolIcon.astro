@@ -1,0 +1,49 @@
+---
+import { TOOLS, type ToolSlug } from "../data/tools";
+
+interface Props {
+  slug: ToolSlug;
+}
+
+const { slug } = Astro.props;
+const tool: (typeof TOOLS)[ToolSlug] = TOOLS[slug];
+
+// Inlined at build time, so the marks cost no extra requests. Slugs with no
+// artwork fall through to a text label.
+const icons = import.meta.glob<string>("../icons/*.svg", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+});
+const svg = icons[`../icons/${slug}.svg`];
+
+// Simple Icons marks are single flattened paths that take their colour from
+// the element. A mark that carries its own fills — Python's two snakes are the
+// reason this exists — is left exactly as drawn.
+const selfColoured = !svg?.includes("currentColor");
+
+// Both values ride on the element; the stylesheet picks per colour scheme.
+const hex = "hex" in tool ? tool.hex : undefined;
+const darkHex = "darkHex" in tool ? tool.darkHex : hex;
+const scale = "scale" in tool ? tool.scale : undefined;
+---
+
+{
+  svg ? (
+    <li
+      class="tool"
+      title={tool.name}
+      style={[
+        !selfColoured && hex && `--tool: ${hex}; --tool-dark: ${darkHex}`,
+        scale && `--tool-scale: ${scale}`,
+      ]
+        .filter(Boolean)
+        .join("; ")}
+    >
+      <span class="tool__mark" aria-hidden="true" set:html={svg} />
+      <span class="visually-hidden">{tool.name}</span>
+    </li>
+  ) : (
+    <li class="tool tool--text">{tool.name}</li>
+  )
+}

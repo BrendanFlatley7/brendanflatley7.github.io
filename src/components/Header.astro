@@ -2,7 +2,7 @@
 import { resume } from "../data/resolve";
 import { displayUrl } from "../utils/format";
 
-const { name, headline, location, email, phone, links } = resume;
+const { name, headline, location, hometown, email, phone, links } = resume;
 
 // Only non-empty profile links render.
 const profiles = (
@@ -13,20 +13,26 @@ const profiles = (
   ] satisfies [label: string, url: string][]
 ).filter(([, url]) => url.length > 0);
 
-// Identity (who and where) reads as one block; ways to reach him read as another.
-const identity = [headline, location].filter(Boolean);
+// Where he lives and where he's from read as one pair, kept off the headline
+// line so neither has to compete with it.
+const places = [
+  location && `Lives in ${location}`,
+  hometown && `From ${hometown}`,
+].filter(Boolean) as string[];
 ---
 
 <header class="masthead">
   <h1 class="masthead__name">{name}</h1>
 
+  {headline && <p class="masthead__identity">{headline}</p>}
+
   {
-    identity.length > 0 && (
-      <p class="masthead__identity">
-        {identity.map((part, i) => (
+    places.length > 0 && (
+      <p class="masthead__places">
+        {places.map((place, i) => (
           <>
             {i > 0 && <span class="masthead__sep" aria-hidden="true" />}
-            <span>{part}</span>
+            <span>{place}</span>
           </>
         ))}
       </p>

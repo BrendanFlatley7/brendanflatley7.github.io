@@ -2,32 +2,110 @@
 import Section from "./Section.astro";
 import { resume } from "../data/resolve";
 
+interface Props {
+  /**
+   * The site leads with these, so each one wears its own logo on its own
+   * background. The PDF lists them as text under Experience.
+   */
+  showcase?: boolean;
+}
+
+const { showcase = false } = Astro.props;
+
 // Personal work samples only. The whole section is omitted while empty.
 const { projects } = resume;
+
+// The site has room to say whose projects these are; the resume, sitting under
+// a page of employment, does not need to.
+const title = showcase ? "Personal Projects" : "Projects";
 ---
 
 {
   projects.length > 0 && (
-    <Section title="Projects">
-      {projects.map((project) => (
-        <article class="project">
-          <div class="project__head">
-            <h3 class="project__name">{project.name}</h3>
-            <p class="project__links">
-              {project.url && <a href={project.url}>Live</a>}
-              {project.repo && <a href={project.repo}>Source</a>}
-            </p>
-          </div>
-          <p class="project__blurb">{project.blurb}</p>
-          {project.tech.length > 0 && (
-            <ul class="tags">
-              {project.tech.map((tech) => (
-                <li>{tech}</li>
-              ))}
-            </ul>
-          )}
-        </article>
-      ))}
+    <Section title={title}>
+      {showcase ? (
+        <div class="showcase">
+          {projects.map((project) => {
+            // The whole mark is the way into the project when there's a link.
+            const Plaque = project.url ? "a" : "div";
+            return (
+              <article class="project-card">
+                {/* The mark carries the name visually; this keeps it in the
+                    document outline and in the accessibility tree. */}
+                <h3 class="visually-hidden">{project.name}</h3>
+
+                <Plaque
+                  class:list={[
+                    "project-card__plaque",
+                    project.mark?.fit === "bleed" && "project-card__plaque--bleed",
+                  ]}
+                  href={project.url}
+                  style={project.mark && `--plaque: ${project.mark.plaque}`}
+                  tabindex={project.url ? "-1" : undefined}
+                  aria-hidden={project.url ? "true" : undefined}
+                >
+                  {project.mark ? (
+                    <img
+                      src={project.mark.src}
+                      width={project.mark.width}
+                      height={project.mark.height}
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <span class="project-card__fallback">{project.name}</span>
+                  )}
+                </Plaque>
+
+                <div class="project-card__body">
+                  <p class="project__blurb">{project.blurb}</p>
+                  <p class="project__links">
+                    {project.url && (
+                      <a href={project.url}>
+                        Visit <span class="visually-hidden">{project.name}</span>
+                      </a>
+                    )}
+                    {project.repo && (
+                      <a href={project.repo}>
+                        Source
+                        <span class="visually-hidden"> for {project.name}</span>
+                      </a>
+                    )}
+                  </p>
+                  {project.tech.length > 0 && (
+                    <ul class="tags">
+                      {project.tech.map((tech) => (
+                        <li>{tech}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      ) : (
+        projects.map((project) => (
+          <article class="project">
+            <div class="project__head">
+              <h3 class="project__name">{project.name}</h3>
+              <p class="project__links">
+                {project.url && <a href={project.url}>Live</a>}
+                {project.repo && <a href={project.repo}>Source</a>}
+              </p>
+            </div>
+            <p class="project__blurb">{project.blurb}</p>
+            {project.tech.length > 0 && (
+              <ul class="tags">
+                {project.tech.map((tech) => (
+                  <li>{tech}</li>
+                ))}
+              </ul>
+            )}
+          </article>
+        ))
+      )}
     </Section>
   )
 }

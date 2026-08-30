@@ -111,6 +111,13 @@ a:focus-visible {
   padding: clamp(var(--space-10), 7vw, 4.5rem) var(--space-6) var(--space-12);
 }
 
+/* The site runs wider than the resume: the measure below is tuned for a page
+   of prose, and the site sets the summary beside the project cards. Print and
+   the generated PDF keep the narrow one — see print.css. */
+.resume--site {
+  --measure: 62rem;
+}
+
 /* ---------------------------------------------------------------------------
    Masthead
    Two deliberately distinct registers: who he is (name + role + city), then
@@ -131,18 +138,26 @@ a:focus-visible {
 }
 
 .masthead__identity {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: var(--space-1) var(--space-3);
   margin-top: var(--space-3);
   font-size: 1.02em;
   color: var(--text-muted);
   letter-spacing: 0.005em;
 }
 
-/* Diamond separator between role and city. */
+/* Where he lives and where he's from — a quieter register than the headline
+   above, so the two never read as one run-on line. */
+.masthead__places {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-1) var(--space-3);
+  margin-top: var(--space-2);
+  font-size: 0.88em;
+  color: var(--text-subtle);
+}
+
+/* Diamond separator between the two places. */
 .masthead__sep {
   width: 4px;
   height: 4px;
@@ -189,6 +204,40 @@ a:focus-visible {
   letter-spacing: -0.008em;
   color: var(--text);
   text-wrap: pretty;
+}
+
+/* ---------------------------------------------------------------------------
+   Intro — the summary beside the projects (site only).
+
+   No breakpoint: auto-fit drops to one column once a 20rem track no longer
+   fits, which is the same thing a mobile query would have said. Above that
+   the summary sits left of the project cards.
+--------------------------------------------------------------------------- */
+
+.intro {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-8) var(--space-10);
+  margin-top: var(--space-8);
+}
+
+/* Flex rather than a grid so the two can be weighted: the cards carry images
+   and need the room, the summary is a paragraph. They wrap to one column as
+   soon as both bases stop fitting, which is the breakpoint without the query. */
+.intro > .lede {
+  flex: 1 1 18rem;
+}
+
+.intro > .section {
+  flex: 1.35 1 24rem;
+}
+
+/* Both children carry their own top margin for the stacked layout; inside the
+   grid the row gap already does that work. */
+.intro > .lede,
+.intro > .section {
+  margin-top: 0;
 }
 
 /* ---------------------------------------------------------------------------
@@ -257,6 +306,23 @@ a:focus-visible {
   font-size: 0.875em;
   line-height: 1.55;
   color: var(--text-muted);
+}
+
+/* The site's flattened version of the same list: one wrapped strip, no groups. */
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.chips li {
+  font-size: 0.8em;
+  line-height: 1.5;
+  color: var(--text-muted);
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 0.2em 0.7em;
 }
 
 /* ---------------------------------------------------------------------------
@@ -389,6 +455,62 @@ a:focus-visible {
   background: var(--accent);
 }
 
+/* A role with no bullets under it needs less room beneath than one that
+   opens into a list. */
+.role--plain + .role--plain {
+  margin-top: var(--space-4);
+}
+
+/* ---------------------------------------------------------------------------
+   Tools — what a role was worked in, standing in for its bullets on the site.
+--------------------------------------------------------------------------- */
+
+.toolstrip {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  margin-top: var(--space-3);
+}
+
+/* Each mark carries its brand colour: at this size the logos are recognised
+   by colour as much as by shape, and a row of grey silhouettes gives that up
+   for nothing. `--tool` is set per icon in ToolIcon.astro. */
+.tool {
+  display: inline-flex;
+  align-items: center;
+  color: var(--tool, var(--text-subtle));
+}
+
+/* Brands drawn in near-black or deep blue need their lighter stand-in — see
+   the `darkHex` note in src/data/tools.ts. */
+@media (prefers-color-scheme: dark) {
+  .tool {
+    color: var(--tool-dark, var(--text-subtle));
+  }
+}
+
+.tool__mark,
+.tool__mark svg {
+  display: block;
+  width: calc(1.2rem * var(--tool-scale, 1));
+  height: calc(1.2rem * var(--tool-scale, 1));
+}
+
+/* Not every tool has a mark that can honestly be drawn — Tableau asked to be
+   removed from Simple Icons, and SQL is a language, not a brand. Those set in
+   type instead, sized to sit level with the glyphs. */
+/* Set as a label rather than a pill: beside the marks a bordered chip reads as
+   the loudest thing in the row, which gets the emphasis backwards. */
+.tool--text {
+  color: var(--text-subtle);
+  font-size: 0.7rem;
+  font-weight: 650;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  line-height: 1.2rem;
+}
+
 /* ---------------------------------------------------------------------------
    Projects
 --------------------------------------------------------------------------- */
@@ -425,6 +547,78 @@ a:focus-visible {
   color: var(--text-muted);
   font-size: 0.94em;
   text-wrap: pretty;
+}
+
+/* --- Site: each project wearing its own logo ---------------------------- */
+
+.showcase {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.project-card {
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--surface);
+  transition: border-color 140ms ease;
+}
+
+.project-card:hover {
+  border-color: var(--rule-strong);
+}
+
+/* The plaque keeps each project's own background in both themes — these are
+   the projects' colours, not the site's, and the marks are drawn for them. */
+.project-card__plaque {
+  display: grid;
+  place-items: center;
+  min-height: 7.5rem;
+  padding: var(--space-5) var(--space-6);
+  background: var(--plaque, #ffffff);
+  border-bottom: 1px solid var(--rule);
+}
+
+/* Capped on both axes so a wide wordmark and a squarer logo carry comparable
+   weight: the wordmark runs out of width first, the logo out of height. */
+.project-card__plaque img {
+  display: block;
+  max-width: 84%;
+  max-height: 5.5rem;
+  width: auto;
+  height: auto;
+}
+
+/* Artwork that brings its own field runs the full width instead — see the
+   `fit` note in src/data/resume.ts. */
+.project-card__plaque--bleed {
+  padding: 0;
+  min-height: 0;
+}
+
+.project-card__plaque--bleed img {
+  width: 100%;
+  max-width: none;
+  max-height: none;
+}
+
+.project-card__fallback {
+  font-size: 1.35rem;
+  font-weight: 660;
+  letter-spacing: -0.02em;
+  color: #17171a;
+}
+
+.project-card__body {
+  padding: var(--space-4) var(--space-5) var(--space-5);
+}
+
+.project-card__body .project__blurb {
+  margin-top: 0;
+}
+
+.project-card__body .project__links {
+  margin-top: var(--space-3);
 }
 
 .tags {

@@ -51,7 +51,15 @@ function stripExportOnly(resume: Resume): Resume {
  * the neutral canonical version with no project detail.
  */
 const selected = import.meta.env.RESUME_VARIANT;
-const isExport = import.meta.env.RESUME_EXPORT === true;
+
+/**
+ * True only inside a PDF build. The two surfaces have diverged past bullet
+ * filtering — the site is a short personal page and the PDF is the full
+ * resume — so index.astro branches its section order on this, and the section
+ * components take it as a mode. It is a build-time constant, so whichever
+ * branch is unused gets dropped from the bundle.
+ */
+export const isExport = import.meta.env.RESUME_EXPORT === true;
 
 if (selected && !variants[selected]) {
   throw new Error(

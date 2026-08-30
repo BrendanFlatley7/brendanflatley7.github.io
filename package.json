@@ -10,7 +10,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "pdf": "node scripts/generate-pdf.mjs"
+    "pdf": "node scripts/generate-pdf.mjs",
+    "marks": "node scripts/capture-project-marks.mjs"
   },
   "dependencies": {
     "astro": "^7.2.3"
