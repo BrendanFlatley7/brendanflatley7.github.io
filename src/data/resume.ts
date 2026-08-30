@@ -130,7 +130,7 @@ export const resume: Resume = {
   },
 
   summary:
-    "Analyst and data modeler leading an organization-wide dbt implementation, modeling the data and setting the standards analysts, engineers, and business users rely on. Often the first call when a project is forming, assessing feasibility, shaping the plan, and delivering the analysis and data products teams adopt and keep using.",
+    "Analyst and data modeler driving our organization-wide dbt implementation, modeling the data and setting the standards analysts, engineers, and business users rely on. Own data projects from feasibility to delivery and, as project lead, the business logic behind every model that ships.",
 
   skills: {
     technical: [
