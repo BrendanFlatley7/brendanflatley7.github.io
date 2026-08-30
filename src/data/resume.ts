@@ -241,10 +241,10 @@ export const resume: Resume = {
           groups: [
             {
               bullets: [
-                "Stepped into the interim director role following the simultaneous departure of the data science director and CTO, maintaining team continuity and project delivery during an extended leadership vacuum",
-                "Met regularly with the executive team to surface risks impacting the team and project timelines, and advised on rebuilding technical leadership — leadership validated this guidance by hiring a new director who adopted the team's direction",
-                "Reprioritized the team's roadmap to focus on building a dbt-based analytics foundation and moving toward self-service, deprioritizing competing initiatives; identified at-risk legacy data flows feeding production application features that needed to be migrated off the team's prior data integration tool",
-                "Chose to return to a hands-on technical focus rather than continue on a people-management track once new leadership was in place",
+                "Stepped into the interim director role during a broader technology leadership transition, maintaining team continuity and project delivery",
+                "Built the case for reprioritizing the team's roadmap toward a dbt-based analytics foundation and self-service reporting, surfacing risks to team capacity and project timelines with the executive team to gain alignment",
+                "Led the team through a shift toward analytics engineering practices, holding three weekly working sessions to coach non-technical analysts on SQL, Tableau, and data modeling standards ahead of the dbt migration",
+                "Identified operational risk in legacy data flows feeding production application features, flagging them for migration off the team's prior integration tool",
               ],
             },
           ],

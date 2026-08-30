@@ -15,9 +15,9 @@ const { showcase = false } = Astro.props;
 // Personal work samples only. The whole section is omitted while empty.
 const { projects } = resume;
 
-// The site has room to say whose projects these are; the resume, sitting under
-// a page of employment, does not need to.
-const title = showcase ? "Personal Projects" : "Projects";
+// Named the same in both layouts, so a reader scanning the PDF next to the
+// Experience section can tell these are personal work, not an employer's.
+const title = "Personal Projects";
 ---
 
 {
