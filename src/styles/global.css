@@ -287,6 +287,12 @@ a:focus-visible {
   gap: var(--space-2);
 }
 
+/* Pill rows are taller than text rows, so they need more air between groups
+   to keep a label reading as the head of the row below it. */
+.skill-lines:has(.skill-line--chips) {
+  gap: var(--space-4);
+}
+
 .skill-line {
   font-size: 0.875em;
   line-height: 1.55;
@@ -307,7 +313,31 @@ a:focus-visible {
   color: var(--text-muted);
 }
 
-/* The site's flattened version of the same list: one wrapped strip, no groups. */
+/* The site keeps the same four labels but sets each group's items as pills,
+   so the label leads a wrapping row rather than a run of text. */
+.skill-line--chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  padding-left: 0;
+  text-indent: 0;
+}
+
+.skill-line--chips .skill-line__label::after {
+  content: none;
+}
+
+/* Narrow enough that most rows wrap their pills under the label anyway —
+   stack every label so one short row does not sit inline beside the rest. */
+@media (max-width: 40rem) {
+  .skill-line--chips {
+    flex-direction: column;
+    align-items: start;
+    gap: var(--space-2);
+  }
+}
+
 .chips {
   display: flex;
   flex-wrap: wrap;

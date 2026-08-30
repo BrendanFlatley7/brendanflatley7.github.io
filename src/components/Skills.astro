@@ -4,40 +4,35 @@ import { resume } from "../data/resolve";
 
 interface Props {
   /**
-   * The site shows one flat strip of what he works with; the labeled lines
-   * are the resume's job.
+   * Both surfaces show the same four labeled lines; the site renders each
+   * group's items as pills, the resume runs them inline as text.
    */
   compact?: boolean;
 }
 
 const { compact = false } = Astro.props;
 const { technical } = resume.skills;
-
-// Flattened in source order, deduped — some tools reasonably sit in two groups.
-const strip = [...new Set(technical.flatMap((group) => group.items))];
 ---
 
 {
-  compact
-    ? strip.length > 0 && (
-        <Section title="Tools & Techniques">
-          <ul class="chips">
-            {strip.map((item) => (
-              <li>{item}</li>
-            ))}
-          </ul>
-        </Section>
-      )
-    : technical.length > 0 && (
-        <Section title="Technical Skills">
-          <ul class="skill-lines">
-            {technical.map((group) => (
-              <li class="skill-line">
-                <span class="skill-line__label">{group.group}</span>
-                {group.items.join(", ")}
-              </li>
-            ))}
-          </ul>
-        </Section>
-      )
+  technical.length > 0 && (
+    <Section title={compact ? "Tools & Techniques" : "Technical Skills"}>
+      <ul class="skill-lines">
+        {technical.map((group) => (
+          <li class={compact ? "skill-line skill-line--chips" : "skill-line"}>
+            <span class="skill-line__label">{group.group}</span>
+            {compact ? (
+              <ul class="chips">
+                {group.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            ) : (
+              group.items.join(", ")
+            )}
+          </li>
+        ))}
+      </ul>
+    </Section>
+  )
 }
