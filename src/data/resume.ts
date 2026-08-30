@@ -127,7 +127,7 @@ export const resume: Resume = {
   },
 
   summary:
-    "Analyst and data modeler driving MetLife Legal Plans' organization-wide dbt implementation, modeling the data and setting the standards analysts, engineers, and business users rely on. Own data projects from feasibility to delivery and, as project lead, the business logic behind every model that ships.",
+    "Analyst and data modeler driving an organization-wide dbt project, modeling the data and setting the standards analysts, engineers, and business users rely on. Own data projects from feasibility to delivery and, as project lead, the business logic behind every model that ships.",
 
   skills: {
     technical: [
