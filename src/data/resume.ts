@@ -130,7 +130,7 @@ export const resume: Resume = {
   },
 
   summary:
-    "6+ years of experience partnering with business stakeholders to provide meaningful analysis and develop data-driven solutions. Strong technical foundation, business acumen, and SQL expertise with a proven track record of delivering production-grade metrics and reporting in Tableau. Thrive on turning ideas and questions into carefully reasoned analysis and clear communication of insights.",
+    "Analyst and data modeler leading an organization-wide dbt implementation, modeling the data and setting the standards analysts, engineers, and business users rely on. Often the first call when a project is forming, assessing feasibility, shaping the plan, and delivering the analysis and data products teams adopt and keep using.",
 
   skills: {
     technical: [

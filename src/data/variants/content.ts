@@ -12,8 +12,7 @@ export const contentVariant: Variant = {
   id: "content",
   label: "Content",
 
-  summary:
-    "Analytics engineer with 6+ years turning business questions into trusted metrics and analysis. Partner directly with stakeholders to define what's worth measuring, build the models and pipelines behind it, and translate the results into decisions — including a member-targeting analysis that reached ~40,000 members monthly and generated over $1M in its first year, and forecasting work built on economic indicators and internal data. Advanced SQL and Python, sole owner of a production dbt transformation layer, and administrator of a 300+ user Tableau environment.",
+  // Summary falls through to the base resume — one wording everywhere.
 
   skills: {
     technical: [
