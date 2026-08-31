@@ -11,12 +11,10 @@ import Projects from "../components/Projects.astro";
 import Education from "../components/Education.astro";
 
 const title = `${resume.name} — ${resume.headline}`;
-// Search engines cut around 155 characters, so cut it here — at the last word
-// boundary, so the description never ends mid-word.
-const description =
-  resume.summary.length <= 155
-    ? resume.summary
-    : resume.summary.slice(0, resume.summary.lastIndexOf(" ", 155));
+// Search engines clip the snippet themselves, by pixel width and per device, so
+// the full summary goes out — cutting it here would only discard text they could
+// have matched against.
+const description = resume.summary;
 ---
 
 <html lang="en">

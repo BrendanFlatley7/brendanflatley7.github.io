@@ -127,7 +127,7 @@ export const resume: Resume = {
   },
 
   summary:
-    "Analyst and data modeler driving an organization-wide dbt project, modeling the data and setting the standards analysts, engineers, and business users rely on. Own data projects from feasibility to delivery and, as project lead, the business logic behind every model that ships.",
+    "Trusted business partner and analytics engineer focused on developing shared organizational knowledge through in-depth analysis and effective communication. Comfortable and experienced working in ambiguity and understanding what will impact the business.",
 
   skills: {
     technical: [
