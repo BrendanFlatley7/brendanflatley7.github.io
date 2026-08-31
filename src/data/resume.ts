@@ -127,7 +127,7 @@ export const resume: Resume = {
   },
 
   summary:
-    "Analytics engineer who owns the full path from raw data to decision-ready product using primarily Python, Prefect, dbt, and Tableau. Partnering closely with business stakeholders to scope and define data products from automated file transmissions to self-service exported marketing materials. Eight years operating with minimal process in a high-ambiguity environment, including a stretch as interim director of data science during a technology leadership transition.",
+    "Analytics engineer who owns the full path from raw data to decision-ready products using primarily Python, Prefect, dbt, and Tableau. Partnering closely with business stakeholders to scope and define data products from automated file transmissions to self-service exported marketing materials. Eight years operating with minimal process in a high-ambiguity environment, including a stretch as interim director of data science during a technology leadership transition.",
 
   skills: {
     technical: [
@@ -185,9 +185,8 @@ export const resume: Resume = {
             {
               bullets: [
                 "Lead the team's dbt implementation, replacing legacy data preparation with a version-controlled transformation layer of ~60 analytics-ready models, and own the architecture, business logic, and standards the team builds against",
-                "Built Tableau dashboards and export templates that replaced a legacy reporting interface, letting account and operations teams self-serve utilization and membership data for 2,000+ customers and cutting report generation time by 90%",
                 "Deliver time series and cohort analysis on claim volume, claim mix, and member retention across plan tiers, defining the metrics account and operations teams reference in pricing decisions",
-                "Built lookup tools the call center depends on daily to meet service level agreements",
+                "Build and maintain lookup tools the call center depends on daily to meet service level agreements",
                 "Scope incoming requests for feasibility and architectural fit, and review and approve modeling work from four data team members",
               ],
             },
@@ -197,6 +196,7 @@ export const resume: Resume = {
               bullets: [
                 "Modeled claims data as one of the first models deployed in the new dbt environment, identified and corrected logic errors in the inherited process, updated the estimated member savings calculation with refined logic for claim subtypes such as Chapter 7 versus Chapter 13 bankruptcy, and presented the correction and its impact on previously reported totals to the executive team",
                 "Designed and implemented a process to identify lapsing members, feeding a new product campaign that reaches ~40,000 members monthly and generated over $1M in revenue in its first year",
+                "Built Tableau dashboards and export templates that replaced a legacy reporting interface, letting account and operations teams self-serve utilization and membership data for 2,000+ customers and cutting report generation time by 90%",
                 "Own the member data feeding a daily transfer to a third-party service supporting ~200,000 monthly members, including enrollment workflows, monthly reporting, and invoicing",
                 "Re-engineered a fragile, application-critical pipeline in Python and Prefect: replaced a full production-table rebuild running every 15 minutes (~7-minute runtime, intermittent unavailability) with an incremental load and indexing strategy, eliminating the outage window and reducing query latency",
               ],
@@ -282,7 +282,7 @@ export const resume: Resume = {
           groups: [
             {
               bullets: [
-                "Five month contract during peak enrollment season to assist in updating plans and enrolling new customers",
+                "Five-month contract during peak enrollment season to assist in updating plans and enrolling new customers",
               ],
             },
           ],
