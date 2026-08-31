@@ -159,7 +159,6 @@ export const resume: Resume = {
           "Time series",
           "Cohort",
           "Forecasting",
-          "Clustering & segmentation",
           "Regression",
         ],
       },
