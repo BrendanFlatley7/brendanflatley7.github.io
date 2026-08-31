@@ -127,7 +127,7 @@ export const resume: Resume = {
   },
 
   summary:
-    "Trusted business partner and analytics engineer focused on developing shared organizational knowledge through in-depth analysis and effective communication. Comfortable and experienced working in ambiguity and understanding what will impact the business.",
+    "Analytics engineer who owns the full path from data model to business decision using primarily Python, Prefect, dbt, and Tableau. Partnering closely with business stakeholders to scope and define data products from automated file transmissions to self-service exported marketing materials. Eight years operating with minimal process in a high-ambiguity environment, including a stretch as interim director of data science during a technology leadership transition.",
 
   skills: {
     technical: [
@@ -189,18 +189,17 @@ export const resume: Resume = {
                 "Built Tableau dashboards and export templates that replaced a legacy reporting interface, letting account and operations teams self-serve utilization and membership data for 2,000+ customers and cutting report generation time by 90%",
                 "Deliver time series and cohort analysis on claim volume, claim mix, and member retention across plan tiers, defining the metrics account and operations teams reference in pricing decisions",
                 "Built lookup tools the call center depends on daily to meet service level agreements",
-                "Review and approve modeling work from four data team members, verifying business logic before it ships",
-                "Scope incoming requests for feasibility and architectural fit, including redirecting operational workflows that did not belong downstream in the warehouse to the teams that own them",
+                "Scope incoming requests for feasibility and architectural fit, and review and approve modeling work from four data team members",
               ],
             },
             {
               label: "Key Projects",
               exportOnly: true,
               bullets: [
-                "Re-modeled the claims data preparation process as one of the first models deployed in the new dbt environment, identifying and correcting logic errors in the inherited process, rebuilding the estimated member savings calculation with refined logic for claim subtypes such as Chapter 7 versus Chapter 13 bankruptcy, and presenting the correction and its impact on previously reported totals to the executive team",
-                "Designed and implemented a process to identify lapsing members by comparing membership state across snapshots over time, feeding a new product campaign that reached ~40,000 members monthly and generated over $1M in revenue in its first year",
-                "Own the member data feeding a daily transfer to a third-party service supporting ~200,000 monthly members, including daily enrollment workflows and monthly reporting and invoicing processes",
-                "Rebuilt a fragile, application-critical data pipeline using Python and Prefect. The prior process fully rebuilt a production table every 15 minutes with a ~7-minute runtime, causing intermittent unavailability; replaced it with an incremental load and added indexing, making the table consistently available and faster to query",
+                "Modeled claims data as one of the first models deployed in the new dbt environment, identified and corrected logic errors in the inherited process, updated the estimated member savings calculation with refined logic for claim subtypes such as Chapter 7 versus Chapter 13 bankruptcy, and presented the correction and its impact on previously reported totals to the executive team",
+                "Designed and implemented a process to identify lapsing members, feeding a new product campaign that reaches ~40,000 members monthly and generated over $1M in revenue in its first year",
+                "Own the member data feeding a daily transfer to a third-party service supporting ~200,000 monthly members, including enrollment workflows, monthly reporting, and invoicing",
+                "Re-engineered a fragile, application-critical pipeline in Python and Prefect: replaced a full production-table rebuild running every 15 minutes (~7-minute runtime, intermittent unavailability) with an incremental load and indexing strategy, eliminating the outage window and reducing query latency",
               ],
             },
 ],
@@ -216,7 +215,7 @@ export const resume: Resume = {
                 "Stepped into the interim director role during a broader technology leadership transition, maintaining team continuity and project delivery",
                 "Built the case for reprioritizing the team's roadmap toward a dbt-based analytics foundation and self-service reporting, surfacing risks to team capacity and project timelines with the executive team to gain alignment",
                 "Led the team through a shift toward analytics engineering practices, holding three weekly working sessions to coach non-technical analysts on SQL, Tableau, and data modeling standards ahead of the dbt migration",
-                "Identified operational risk in legacy data flows feeding production application features, flagging them for migration off the team's prior integration tool",
+                "Identified operational risk in legacy data flows feeding production application features and drove their migration off the team's prior integration tool",
               ],
             },
           ],
@@ -235,7 +234,8 @@ export const resume: Resume = {
           groups: [
             {
               bullets: [
-                "Designed and built database views to replace redundant custom SQL embedded across multiple Tableau workbooks, refactoring reports to a standardized data source, regression-testing aggregations for accuracy, and updating documentation",
+                "Replaced redundant custom SQL embedded across multiple Tableau workbooks with standardized database views, consolidating reporting onto a single governed data source",
+                "Regression-tested aggregations against prior outputs to verify accuracy through the migration, and documented the new source for the reporting team",
               ],
             },
           ],
@@ -249,20 +249,21 @@ export const resume: Resume = {
           title: "Business Intelligence Developer",
           start: "Mar 2020",
           end: "Jun 2022",
-          tools: ["sql", "qlik", "tableau", "matillion"],
+          tools: ["sql", "snowflake", "qlik", "tableau", "matillion"],
           groups: [
             {
               bullets: [
-                "Configured and implemented ETL workflows using Qlik Replicate and Matillion",
                 "Facilitated meetings, research, and documentation for defining existing processes and business logic",
+                "Modeled source data into curated views in Snowflake, establishing the reporting layer that downstream Tableau dashboards were built on",
+                "Configured and implemented ETL workflows using Qlik Replicate and Matillion",
               ],
             },
             {
               label: "Key Projects",
               exportOnly: true,
               bullets: [
-                "Designed benchmarking and sales forecasting reports using academic research, economic indicators, and internal data",
-                "Built product relationship data model to improve projected lead-time analysis",
+                "Developed sales forecasting and benchmarking reports combining internal data with economic indicators and academic research, giving leadership a demand view beyond historical sales",
+                "Built a product relationship data model that improved projected lead-time analysis across the product catalog",
                 "Developed internal expense tracking data model and real-time Tableau visualization for executive team",
               ],
             },
@@ -282,10 +283,7 @@ export const resume: Resume = {
           groups: [
             {
               bullets: [
-                // TODO(Brendan): the LinkedIn entry continues past this — it
-                // goes on about documenting requirements in client meetings.
-                // Finish the sentence in your own words.
-                "Facilitated updates and new enrollment of client business insurance plans and coverages",
+                "Five month contract during peak enrollment season to assist in updating plans and enrolling new customers",
               ],
             },
           ],
@@ -303,7 +301,7 @@ export const resume: Resume = {
           groups: [
             {
               bullets: [
-                "Supported SAP implementation and migration projects as a Project Management Officer for multiple Fortune 500 companies in the insurance industry",
+                "Supported SAP implementation and migration programs as a project management officer for Fortune 500 insurance clients",
               ],
             },
           ],
@@ -324,7 +322,7 @@ export const resume: Resume = {
     {
       name: "My Little Gambler",
       blurb:
-        "Sourced and created historical data source for NFL odds and results for prediction model, including daily cron jobs to track odds changes and hedging opportunities on current bets.",
+        "Built an end-to-end NFL odds pipeline: sourced and modeled historical odds and results, with daily cron jobs tracking line movement and surfacing hedging opportunities on open positions.",
       url: "https://my-little-gambler.vercel.app",
       tech: [],
       mark: {
