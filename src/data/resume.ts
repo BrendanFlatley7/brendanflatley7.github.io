@@ -333,8 +333,7 @@ export const resume: Resume = {
     },
     {
       name: "Hi / Lo",
-      blurb:
-        "Tracks a 2v2 golf side game.",
+      blurb: "Web app for scoring a 2v2 golf side game.",
       url: "https://hi-lo-psi.vercel.app/game/new",
       tech: [],
       mark: {
