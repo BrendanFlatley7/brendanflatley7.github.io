@@ -141,7 +141,6 @@ export const resume: Resume = {
           "Prefect",
           "Git",
           "Docker",
-          "Spark",
         ],
       },
       {
@@ -164,7 +163,11 @@ export const resume: Resume = {
       },
       {
         group: "Platforms",
-        items: ["Redshift", "S3", "Azure", "Snowflake"],
+        items: ["Redshift", "S3", "Azure", "Snowflake", "PostgreSQL", "Vercel"],
+      },
+      {
+        group: "AI-Assisted Development",
+        items: ["Claude Code", "Codex"],
       },
     ] as SkillGroup[],
   },
@@ -321,7 +324,7 @@ export const resume: Resume = {
     {
       name: "My Little Gambler",
       blurb:
-        "Built an end-to-end NFL odds pipeline: sourced and modeled historical odds and results, with daily cron jobs tracking line movement and surfacing hedging opportunities on open positions.",
+        "Built an end-to-end NFL odds pipeline: sourced and modeled historical odds and results, with daily cron jobs tracking line movement and surfacing hedging opportunities on open positions. Created with Claude Code and Codex.",
       url: "https://my-little-gambler.vercel.app",
       tech: [],
       mark: {
@@ -333,7 +336,8 @@ export const resume: Resume = {
     },
     {
       name: "Hi / Lo",
-      blurb: "Web app for scoring a 2v2 golf side game.",
+      blurb:
+        "Web app for scoring a 2v2 golf side game. Created with Claude Code and Codex.",
       url: "https://hi-lo-psi.vercel.app/game/new",
       tech: [],
       mark: {
