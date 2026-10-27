@@ -127,7 +127,7 @@ export const resume: Resume = {
   },
 
   summary:
-    "Analytics engineer who owns the full path from raw data to decision-ready products using primarily Python, Prefect, dbt, and Tableau. Partnering closely with business stakeholders to scope and define data products from automated file transmissions to self-service exported marketing materials. Eight years operating with minimal process in a high-ambiguity environment, including a stretch as interim director of data science during a technology leadership transition.",
+    "Analytics engineer who owns the full process from raw data to stakeholder delivery using primarily Python, Prefect, dbt, and Tableau. Partnering closely with business stakeholders to scope and define data products from automated file transmissions to self-service exported marketing materials. Eight years producing quality solutions in high-ambiguity environments, including a stretch as interim director of data science during a technology leadership transition.",
 
   skills: {
     technical: [
